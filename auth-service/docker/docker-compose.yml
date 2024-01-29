@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    container_name: authentification-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: authentification
+      POSTGRES_USER: idder
+      POSTGRES_PASSWORD: idderjamh
+  authentification:
+    container_name: authentification
+    image: authentification:1.0
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/authentification
+      SPRING_DATASOURCE_USERNAME: idder
+      SPRING_DATASOURCE_PASSWORD: idderjamh
+    restart: on-failure
+    depends_on:
+      - db
